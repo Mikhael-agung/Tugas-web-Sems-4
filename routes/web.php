@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\TransaksiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,23 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
     Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+});
+
+
+Route::middleware(['auth', 'role:staff'])->group(function () {
+    // index adalah method untuk menampilkan daftar data contoh seperti get /barang
+  
+    
+
+    // fitur transaksi masuk
+    Route::get('/transaksi/masuk', [TransaksiController::class, 'masuk'])->name('transaksi.masuk');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+
+    //Fitur transaksi keluar 
+    Route::get('/transkasi/keluar', [TransaksiController::class, 'keluar'])->name('transaksi.keluar');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+
 });
 
 require __DIR__ . '/auth.php';
