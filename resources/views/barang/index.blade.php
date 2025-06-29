@@ -1,6 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Daftar Barang
+        </h2>
+    </x-slot>
     <div class="container mx-auto px-4">
         <h1 class="text-2xl font bold mt-4"> Daftar Barang </h1>
         <div class="mb-4 text-right">
@@ -27,7 +30,8 @@
                         <td class="border p-2">{{ $barang->stok }}</td>
                         <td class="border p-2 text-center">
                             <div>
-                                <a href="{{route('barang.edit', $barang->id)}}" class="text-blue-600 hover:underline"> Edit </a>
+                                <a href="{{ route('barang.edit', $barang->id) }}" class="text-blue-600 hover:underline">
+                                    Edit </a>
                                 <form action="{{ route('barang.destroy', $barang->id) }}" method="POST"
                                     onsubmit="return confirm('Yakin mau hapus barang ini?')">
                                     @csrf
@@ -41,4 +45,4 @@
             </tbody>
         </table>
     </div>
-@endsection
+</x-app-layout>

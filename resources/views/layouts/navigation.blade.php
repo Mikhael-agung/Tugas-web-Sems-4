@@ -20,6 +20,13 @@
                             <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang')">
                                 {{ __('Barang') }}
                             </x-nav-link>
+                        @elseif (auth::user()->role === 'staff')
+                            <x-nav-link :href="route('transaksi.masuk')" :active="request()->routeIs('transaksi.*')">
+                                {{ __('Transaksi Masuk') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('transaksi.keluar')" :active="request()->routeIs('transaks.*')">
+                                {{ __('Transaksi Keluar') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
@@ -91,6 +98,17 @@
                 <div class="pt-2 pb-3 space-y-1">
                     <x-responsive-nav-link :href="route('barang.index')" :active="request()->routeIs('Barang.*')">
                         {{ __('Barang') }}
+                    </x-responsive-nav-link>
+                </div>
+            @elseif (auth::user()->role == 'staff')
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('transaksi.masuk')" :active="request()->routeIs('transaksi.*')">
+                        {{ __('Transaksi Masuk') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('transaksi.keluar')" :active="request()->routeIs('transaksi.*')">
+                        {{ __('Transaksi Keluar') }}
                     </x-responsive-nav-link>
                 </div>
             @endif

@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksis', function (Blueprint $table) {
+        Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
+            $table->foreignid('barang_id')->constrained();
+            $table->enum('jenis', ['masuk', 'keluar']);
+            $table->text('keterangan');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
