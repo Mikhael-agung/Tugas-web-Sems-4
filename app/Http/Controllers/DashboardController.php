@@ -13,6 +13,5 @@ class DashboardController extends Controller
         $barangCount = Barang::count();
         $stokMenipis = Barang::where('stok', '<=', 10)->count();
         return view('dashboard', ['barangCount' => $barangCount,'stokMenipis' => $stokMenipis]);
-        
     }
 }
