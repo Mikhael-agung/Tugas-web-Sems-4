@@ -7,15 +7,20 @@ use Illuminate\Http\Request;
 use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
 
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\CssSelector\Node\FunctionNode;
+
 use function PHPUnit\Framework\returnSelf;
 
 class BarangController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::all(); //ambil semua barang
-        return view('barang.index', ['barangs' => $barangs]);
+        // $barangs = Barang::all(); //ambil semua barang
+        // return view('barang.index', ['barangs' => $barangs]);
+        $barangs = Barang::filter($request->query('search'))->get();
+        return view('barang.index', compact('barangs'));
     }
 
     public function create()
@@ -50,7 +55,7 @@ class BarangController extends Controller
     public function edit($id)
     {
         $barang = Barang::findOrFail($id);
-        return view('barang.edit', compact('barang'));
+        return view('barang.edit', ['barang' => $barang]);
     }
     public function destroy($id)
     {
