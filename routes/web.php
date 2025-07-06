@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
@@ -19,10 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    // index adalah method untuk menampilkan daftar data contoh seperti get /barang
-    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+Route::middleware('auth')->get('/barang', [BarangController::class, 'index'])->name('barang.index');
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
     // fitur tambah barang
     Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
     Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
@@ -50,4 +53,13 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 
 });
 
+Route::middleware(['auth', 'role:staff'])->group(function () {
+
+    // Transaksi masuk & keluar
+    Route::get('/transaksi/masuk', [TransaksiController::class, 'formMasuk'])->name('transaksi.masuk');
+    Route::post('/transaksi/masuk', [TransaksiController::class, 'storeMasuk'])->name('transaksi.store.masuk');
+
+    Route::get('/transaksi/keluar', [TransaksiController::class, 'formKeluar'])->name('transaksi.keluar');
+    Route::post('/transaksi/keluar', [TransaksiController::class, 'storeKeluar'])->name('transaksi.store.keluar');
+});
 require __DIR__ . '/auth.php';
