@@ -17,14 +17,17 @@
                     </x-nav-link>
                     @auth
                         @if (Auth::user()->role === 'admin')
-                            <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang')">
+                            <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.index')">
                                 {{ __('Barang') }}
                             </x-nav-link>
-                        @elseif (auth::user()->role === 'staff')
-                            <x-nav-link :href="route('transaksi.masuk')" :active="request()->routeIs('transaksi.*')">
+                        @elseif (Auth::user()->role === 'staff')
+                            <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.index')">
+                                {{ __('Lihat Barang') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('transaksi.masuk')" :active="request()->routeIs('transaksi.masuk')">
                                 {{ __('Transaksi Masuk') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('transaksi.keluar')" :active="request()->routeIs('transaks.*')">
+                            <x-nav-link :href="route('transaksi.keluar')" :active="request()->routeIs('transaksi.keluar')">
                                 {{ __('Transaksi Keluar') }}
                             </x-nav-link>
                         @endif
@@ -96,18 +99,23 @@
         @auth
             @if (auth::user()->role == 'admin')
                 <div class="pt-2 pb-3 space-y-1">
-                    <x-responsive-nav-link :href="route('barang.index')" :active="request()->routeIs('Barang.*')">
+                    <x-responsive-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.*')">
                         {{ __('Barang') }}
                     </x-responsive-nav-link>
                 </div>
             @elseif (auth::user()->role == 'staff')
                 <div class="pt-2 pb-3 space-y-1">
-                    <x-responsive-nav-link :href="route('transaksi.masuk')" :active="request()->routeIs('transaksi.*')">
+                    <x-responsive-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.index')">
+                        {{ __('Lihat Barang') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('transaksi.masuk')" :active="request()->routeIs('transaksi.masuk')">
                         {{ __('Transaksi Masuk') }}
                     </x-responsive-nav-link>
                 </div>
                 <div class="pt-2 pb-3 space-y-1">
-                    <x-responsive-nav-link :href="route('transaksi.keluar')" :active="request()->routeIs('transaksi.*')">
+                    <x-responsive-nav-link :href="route('transaksi.keluar')" :active="request()->routeIs('transaksi.keluar')">
                         {{ __('Transaksi Keluar') }}
                     </x-responsive-nav-link>
                 </div>
