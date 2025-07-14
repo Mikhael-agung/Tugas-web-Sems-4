@@ -5,7 +5,8 @@
         </h2>
     </x-slot>
     <div class="container mx-auto px-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-2 mt-2">
+        <div
+            class="flex flex-wrap items-center justify-{{ Auth::user()->role === 'staff' ? 'center' : 'between' }} gap-2 mb-2 mt-2">
             @auth
                 @if (Auth::user()->role == 'admin')
                     <div class="mt-6 mb-6 text-right">
@@ -19,7 +20,7 @@
 
             <form method="GET" action="{{ route('barang.index') }}" class="mb-4 mt-4 text-right">
                 <input type="text" name="search" placeholder="Cari nama atau kode barang..."
-                    value="{{ request('search') }}" class="border rounded p-2 w-80">
+                    value="{{ request('search') }}" class="border rounded p-2 w-90">
                 <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded ml-2">Cari</button>
             </form>
         </div>

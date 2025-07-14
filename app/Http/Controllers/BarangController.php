@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\LogAktivitas;
 use Illuminate\Http\Request;
 use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
@@ -36,7 +37,13 @@ class BarangController extends Controller
             'stok' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
         ]);
-        Barang::create($request->all());
+        $barang = Barang::create($request->all());
+        LogAktivitas::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'aksi' => 'Tambah barang',
+            'keterangan' => "Menambahkan barang '{$barang->nama}' (kode: {$barang->kode}) dengan stok awal {$barang->stok}"
+        ]);
         return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
     }
 
@@ -46,10 +53,17 @@ class BarangController extends Controller
             'nama' => 'required',
             'kode' => 'required|unique:barangs,kode,' . $id,
             'stok' => 'required|integer|min:0',
-            'deskripsi' => 'nullalbe|string',
+            'deskripsi' => 'nullable|string',
         ]);
         $barang = Barang::findOrFail($id);
         $barang->update($request->all());
+
+        LogAktivitas::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'aksi' => 'Update Barang',
+            'keterangan' => "Mengedit barang '{$barang->nama}' (kode: {$barang->kode}). stok sekarang: ($barang->stok}."
+        ]);
         return redirect()->route('barang.index')->with('success', 'Barang berhasil di update!');
     }
     public function edit($id)
@@ -61,6 +75,12 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id);
         $barang->delete();
+        LogAktivitas::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'aksi' => 'Hapus Barang',
+            'keterangan' => "Menghapus barang '{$barang->nama}' (kode: {$barang->kode})"
+        ]);
         return redirect()->route('barang.index')->with('success', 'Barang berhasil di hapus!');
     }
 }
