@@ -20,6 +20,9 @@
                             <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.index')">
                                 {{ __('Barang') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('log.aktivitas')" :active="request()->routeIs('log.aktivitas')">
+                                {{ __('Log Aktivitas') }}
+                            </x-nav-link>
                         @elseif (Auth::user()->role === 'staff')
                             <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.index')">
                                 {{ __('Lihat Barang') }}
@@ -101,6 +104,11 @@
                 <div class="pt-2 pb-3 space-y-1">
                     <x-responsive-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.*')">
                         {{ __('Barang') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('log.aktivitas')" :active="request()->routeIs('log.aktivitas')">
+                        {{ __('Log aktivitas') }}
                     </x-responsive-nav-link>
                 </div>
             @elseif (auth::user()->role == 'staff')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\LogAktivitas;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,15 @@ class TransaksiController extends Controller
             'keterangan' => $request->keterangan
         ]);
 
+        $user = Auth::user();
+
+        LogAktivitas::create([
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'aksi' => "Transaksi Masuk",
+            'keterangan' => "User {$user->name} melakukan transaksi MASUK untuk barang '{$barang->nama}' sebanyak {$request->jumlah} unit. Keterangan: {$request->keterangan}"
+        ]);
+
         return redirect()->route('transaksi.masuk')->with('success', 'strok berhasil ditambah');
     }
 
@@ -66,6 +76,15 @@ class TransaksiController extends Controller
             'jumlah' => $request->jumlah,
             'keterangan' => $request->keterangan
         ]);
+
+        $user = Auth::user();
+        LogAktivitas::create([
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'aksi' => 'Transaksi Keluar',
+            'keterangan' => "keterangan' => User {$user->name} melakukan transaksi KELUAR untuk barang '{$barang->nama}' sebanyak {$request->jumlah} unit. Keterangan: {$request->keterangan}"
+        ]);
+        
         return redirect()->route('transaksi.keluar')->with('success', 'stok berhasil di kurangi');
     }
 }

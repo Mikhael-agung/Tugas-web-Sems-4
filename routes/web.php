@@ -4,6 +4,7 @@ use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LogAktivitasController;
 use App\Http\Controllers\ProfileController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -33,6 +34,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
     Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+    Route::get('/log-aktivitas', [LogAktivitasController::class, 'index'])->name('log.aktivitas');
 });
 
 Route::middleware(['auth', 'role:staff'])->group(function () {

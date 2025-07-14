@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function transaksi(){
         return $this->hasMany(transaksi::class)->withTrashed();
     }
+
+    public function LogAktivitas()
+    {
+        return $this->hasMany(LogAktivitas::class);
+    }
 }
